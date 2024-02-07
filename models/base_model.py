@@ -13,6 +13,7 @@ class BaseModel:
         self.update_at = datetime.now()
     """def __str__(self):
         return(f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}")"""
+
     def to_dict(self):
         dict_obj = self.__dict__.copy()
         dict_obj['__class__'] = self.__class__.__name__
@@ -21,4 +22,3 @@ class BaseModel:
         return dict_obj
     def __str__(self):
         return(f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}")
-
