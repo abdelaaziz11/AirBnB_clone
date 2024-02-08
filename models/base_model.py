@@ -1,7 +1,9 @@
 #!/usr/bin/python3
+
 from datetime import datetime
 from uuid import uuid4
 import models
+
 
 class BaseModel:
     def __init__(self, *arg, **kwargs):
@@ -13,10 +15,10 @@ class BaseModel:
             self.id = str(uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
+            models.storage.new(self)
     def save(self):
         self.updated_at = datetime.now()
-    """def __str__(self):
-        return(f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}")"""
+        models.storage.save()
 
     def to_dict(self):
         dict_obj = self.__dict__.copy()
@@ -24,5 +26,6 @@ class BaseModel:
         dict_obj['created_at'] = self.created_at.isoformat()
         dict_obj['updated_at'] = self.updated_at.isoformat()
         return dict_obj
+
     def __str__(self):
-        return(f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}")
+        return f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"
