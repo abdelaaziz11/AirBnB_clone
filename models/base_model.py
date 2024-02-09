@@ -17,6 +17,7 @@ class BaseModel:
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
 <<<<<<< HEAD
+<<<<<<< HEAD
             storage.new(self)
     def save(self):
         self.updated_at = datetime.now()
@@ -25,9 +26,10 @@ class BaseModel:
         return(f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}")"""
 =======
             models.storage.new(self)
+=======
+>>>>>>> 52cac4f1eea103f6dccc2fb2dce20bda2e3f71dd
     def save(self):
         self.updated_at = datetime.now()
-        models.storage.save()
 
 >>>>>>> b864a7c56e48e018909a6c825f5eb855ecbb89a0
     def to_dict(self):
