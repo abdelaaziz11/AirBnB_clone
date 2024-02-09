@@ -15,10 +15,8 @@ class BaseModel:
             self.id = str(uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
-            models.storage.new(self)
     def save(self):
         self.updated_at = datetime.now()
-        models.storage.save()
 
     def to_dict(self):
         dict_obj = self.__dict__.copy()
