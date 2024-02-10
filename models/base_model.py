@@ -7,10 +7,15 @@ from models.__init__ import storage
 class BaseModel:
     def __init__(self, *arg, **kwargs):
         """ base model """
+        tform = "%Y-%m-%dT%H:%M:%S.%f"
         if kwargs:
             for keys, values in kwargs.items():
-                if keys != '__class__':
-                    setattr(self, keys, values)
+                """if keys != '__class__':
+                    setattr(self, keys, values)"""
+                if k == "created_at" or k == "updated_at":
+                    self.__dict__[k] = datetime.strptime(v, tform)
+                else:
+                    self.__dict__[k] = v
                 """if keys == "created_at":
                     self.__dict__[keys] = datetime.strptime(values, formt)
                 elif keys == "updated_at":
