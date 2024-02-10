@@ -22,9 +22,6 @@ class BaseModel:
                     self.__dict__[keys] = values
         else:
             models.storage.new(self)
-    def __str__(self):
-        """print: [<class name>] (<self.id>) <self.__dict__>"""
-        return f"[{self.__class__.__name__}]({self.id}) {self.__dict__}" 
     def save(self):
         """updates the public instance attribute"""
         self.updated_at = datetime.today()
@@ -37,3 +34,6 @@ class BaseModel:
         dict_obj['updated_at'] = self.updated_at.isoformat()
         dict_obj['__class__'] = self.__class__.__name__
         return dict_obj
+    def __str__(self):
+        """print: [<class name>] (<self.id>) <self.__dict__>"""
+        return f"[{self.__class__.__name__}]({self.id}) {self.__dict__}"
