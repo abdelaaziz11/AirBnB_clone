@@ -7,10 +7,16 @@ from uuid import uuid4
 
 class BaseModel:
     def __init__(self):
+            formattime = "%Y-%m-%dT%H:%M:%S.%f"
             self.id = str(uuid4())
             self.created_at = datetime.today()
             self.updated_at = self.created_at
-
+            if 'created_at' in self.__dict__ and isinstance(self.__dict__['created_at'], str):
+                self.created_at = datetime.strptime(self.__dict__['created_at'], formattime)
+        
+        # Check if 'updated_at' is present in the instance dictionary and if it's a string
+            if 'updated_at' in self.__dict__ and isinstance(self.__dict__['updated_at'], str):
+                self.updated_at = datetime.strptime(self.__dict__['updated_at'], formattime)
     def save(self):
         """updates the public instance attribute"""
         self.updated_at = datetime.today()
