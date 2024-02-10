@@ -3,7 +3,7 @@
 from datetime import datetime
 from uuid import uuid4
 import models
-#from models.__init__ import storage
+from models.__init__ import storage
 
 class BaseModel:
     def __init__(self, *arg, **kwargs):
@@ -15,12 +15,14 @@ class BaseModel:
             self.id = str(uuid4())
             self.created_at = datetime.today()
             self.updated_at = datetime.today()
+            self.created_at = datetime.now()
+            self.updated_at = datetime.now()
             storage.new(self)
 
     def save(self):
         """updates the public instance attribute"""
         self.updated_at = datetime.today()
-        #storage.save()
+        storage.save()
 
     def to_dict(self):
         """returns a dictionary containing all keys/values of __dict__"""
