@@ -24,17 +24,23 @@ class BaseModel:
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
             storage.new(self)
+
     def save(self):
+        """updates the public instance attribute"""
         self.updated_at = datetime.now()
         storage.save()
-    """def __str__(self):
-        return(f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}")"""
+    def __str__(self):
+        return(f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}")
+
     def to_dict(self):
+        """returns a dictionary containing all keys/values of __dict__"""
         dict_obj = self.__dict__.copy()
         dict_obj['__class__'] = self.__class__.__name__
         dict_obj['created_at'] = self.created_at.isoformat()
         dict_obj['updated_at'] = self.updated_at.isoformat()
         return dict_obj
-    def __str__(self):
-        return(f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}")
+
+    """def __str__(self):"""
+        """print: [<class name>] (<self.id>) <self.__dict__>
+        return(f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}")"""
 
