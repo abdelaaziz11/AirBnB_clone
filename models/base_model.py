@@ -15,8 +15,6 @@ class BaseModel:
             self.id = str(uuid4())
             self.created_at = datetime.today()
             self.updated_at = datetime.today()
-            self.created_at = datetime.now()
-            self.updated_at = datetime.now()
             storage.new(self)
 
     def save(self):
@@ -30,7 +28,6 @@ class BaseModel:
         dict_obj['created_at'] = self.created_at.isoformat()
         dict_obj['updated_at'] = self.updated_at.isoformat()
         dict_obj['__class__'] = self.__class__.__name__
-        #return {key: dict_obj[key] for key in keys_order}
         return dict_obj
 
     def __str__(self):
