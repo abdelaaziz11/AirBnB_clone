@@ -8,10 +8,10 @@ class BaseModel:
     def __init__(self, *arg, **kwargs):
         """ base model """
         """tform = "%Y-%m-%dT%H:%M:%S.%f" """
-        """if kwargs:
+        if kwargs:
             for keys, values in kwargs.items():
                 if keys != '__class__':
-                    setattr(self, keys, values)"""
+                    setattr(self, keys, values)
                 """if k == "created_at" or k == "updated_at":
                     self.__dict__[k] = datetime.strptime(v, tform)
                 else:
@@ -22,23 +22,11 @@ class BaseModel:
                     self.__dict__[keys] = datetime.strptime(values, formt)
                 else:
                     self.__dict__[k] = v"""
-        """else:
+        else:
             self.id = str(uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
-            storage.new(self)"""
-        tform = "%Y-%m-%dT%H:%M:%S.%f"
-        self.id = str(uuid4())
-        self.created_at = datetime.today()
-        self.updated_at = datetime.today()
-        if len(kwargs) != 0:
-            for k, v in kwargs.items():
-                if k == "created_at" or k == "updated_at":
-                    self.__dict__[k] = datetime.strptime(v, tform)
-                else:
-                    self.__dict__[k] = v
-        else:
-            models.storage.new(self)
+            storage.new(self)
 
     def save(self):
         """updates the public instance attribute"""
