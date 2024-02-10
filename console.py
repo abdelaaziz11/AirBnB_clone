@@ -3,6 +3,7 @@
 
 import cmd
 
+
 class HBNBCommand(cmd.Cmd):
     prompt = '(hbnb) '
 
@@ -18,6 +19,7 @@ class HBNBCommand(cmd.Cmd):
     def emptyline(self):
         """On empty line do nothing"""
         pass
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
