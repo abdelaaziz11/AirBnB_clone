@@ -1,10 +1,10 @@
 #!/usr/bin/python3
 """The BaseModel Class"""
-import models
 from datetime import datetime
 from uuid import uuid4
-"""import models"""
-"""from models.__init__ import storage"""
+import models
+from models.__init__ import storage
+
 
 class BaseModel:
     def __init__(self, *arg, **kwargs):
@@ -48,4 +48,4 @@ class BaseModel:
 
     def __str__(self):
         """print: [<class name>] (<self.id>) <self.__dict__>"""
-        return(f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}")
+        return f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"
