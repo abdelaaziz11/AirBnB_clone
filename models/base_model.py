@@ -6,21 +6,20 @@ import models
 #from models.__init__ import storage
 
 class BaseModel:
-    def init__(self):
-    """def __init__(self, *arg, **kwargs):
+    def __init__(self, *arg, **kwargs):
         if kwargs:
             for keys, values in kwargs.items():
                 if keys != '__class__':
                     setattr(self, keys, values)
-        else:"""
-        self.id = str(uuid4())
-        self.created_at = datetime.now()
-        self.updated_at = datetime.now()
-        #storage.new(self)
+        else:
+            self.id = str(uuid4())
+            self.created_at = datetime.today()
+            self.updated_at = datetime.today()
+            storage.new(self)
 
     def save(self):
         """updates the public instance attribute"""
-        self.updated_at = datetime.now()
+        self.updated_at = datetime.today()
         #storage.save()
 
     def to_dict(self):
