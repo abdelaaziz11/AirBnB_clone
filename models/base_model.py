@@ -29,8 +29,8 @@ class BaseModel:
         """updates the public instance attribute"""
         self.updated_at = datetime.now()
         storage.save()
-    def __str__(self):
-        return(f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}")
+    """def __str__(self):
+        return(f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}")"""
 
     def to_dict(self):
         """returns a dictionary containing all keys/values of __dict__"""
@@ -40,7 +40,7 @@ class BaseModel:
         dict_obj['updated_at'] = self.updated_at.isoformat()
         return dict_obj
 
-    """def __str__(self):"""
-        """print: [<class name>] (<self.id>) <self.__dict__>
-        return(f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}")"""
+    def __str__(self):
+        """print: [<class name>] (<self.id>) <self.__dict__>"""
+        return(f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}")
 
