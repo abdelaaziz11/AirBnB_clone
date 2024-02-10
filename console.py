@@ -73,28 +73,6 @@ class HBNBCommand(cmd.Cmd):
                 print("** class doesn't exist **")
 
     def do_update(self, arg):
-        """Updates an instance based on the class name and id by adding or updating attribute."""
-        args = arg.split()
-        if len(args) == 0:
-            print("** class name missing **")
-            return
-        elif len(args) == 1:
-            print("** instance id missing **")
-            return
-        elif len(args) == 2:
-            print("** attribute name missing **")
-            return
-        elif len(args) == 3:
-            print("** value missing **")
-            return
-        try:
-            key = args[0] + '.' + args[1]
-            obj = HBNBCommand.file_storage.all()[key]
-            setattr(obj, args[2], args[3])
-            obj.save()
-        except KeyError:
-            print("** no instance found **")
-    """def do_update(self, arg):
         """Updates an instance based on the class name and id"""
         args = arg.split()
         if not args:
@@ -117,7 +95,7 @@ class HBNBCommand(cmd.Cmd):
                         setattr(obj, args[2], eval(args[3]))
                         obj.save()
             except NameError:
-                print("** class doesn't exist **")"""
+                print("** class doesn't exist **")
 
     def do_quit(self, arg):
         """quit command to exit the program"""
