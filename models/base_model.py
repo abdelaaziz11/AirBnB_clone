@@ -7,7 +7,6 @@ from models.__init__ import storage
 class BaseModel:
     def __init__(self, *arg, **kwargs):
         """ base model """
-        formt = "%Y-%m-%dT%H:%M:%S.%f"
         if kwargs:
             for keys, values in kwargs.items():
                 if keys != '__class__':
