@@ -94,6 +94,7 @@ class HBNBCommand(cmd.Cmd):
                         obj.save()
             except NameError:
                 print("** class doesn't exist **")
+        storage.save()
 
     def do_quit(self, arg):
         """quit command to exit the program"""
