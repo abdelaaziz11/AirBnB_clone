@@ -10,14 +10,14 @@ class BaseModel:
         formt = "%Y-%m-%dT%H:%M:%S.%f"
         if kwargs:
             for keys, values in kwargs.items():
-                """if keys != '__class__':
-                    setattr(self, keys, values)"""
-                if keys == "created_at":
+                if keys != '__class__':
+                    setattr(self, keys, values)
+                """if keys == "created_at":
                     self.__dict__[keys] = datetime.strptime(values, formt)
                 elif keys == "updated_at":
                     self.__dict__[keys] = datetime.strptime(values, formt)
                 else:
-                    self.__dict__[k] = v
+                    self.__dict__[k] = v"""
 
         else:
             self.id = str(uuid4())
