@@ -10,12 +10,12 @@ class BaseModel:
 
     def __init__(self, *args, **kwargs):
         """Create a new BaseModel.
-        Args: *args is unused and **kwargs is for attributes."""
-
-        formattime = "%Y-%m-%dT%H:%M:%S.%f"
+        Args: *args is unused and **kwargs is for attributes.
+        """
+        formattime = "%Y-%m-%dT%H:%M:%S.%f" 
+        self.updated_at = datetime.today()
         self.id = str(uuid4())
         self.created_at = datetime.today()
-        self.updated_at = datetime.today()
         if len(kwargs) != 0:
             for keys, values in kwargs.items():
                 if keys == "created_at" or keys == "updated_at":
@@ -27,26 +27,18 @@ class BaseModel:
     def save(self):
         """updates the public instance attribute"""     
         self.updated_at = datetime.today()
-        storage.save()
+        models.storage.save()
 
     def to_dict(self):
-        """returns a dictionary containing all keys/values of __dict__"""
+        """returns a dictionary containing all 
+        keys/values of __dict__
+        """
         dict_obj = self.__dict__.copy()
         dict_obj['created_at'] = self.created_at.isoformat()
         dict_obj['updated_at'] = self.updated_at.isoformat()
         dict_obj['__class__'] = self.__class__.__name__
         return dict_obj
-        """def __str__(self):"""
-        """print: [<class name>] (<self.id>) <self.__dict__>"""
-        """return f"[{self.__class__.__name__}]({self.id}) {self.__dict__}" """
+
     def __str__(self):
         """print: [<class name>] (<self.id>) <self.__dict__>"""
-        attrs = [
-            'my_number',
-            'name',
-            'updated_at',
-            'id',
-            'created_at'
-            ]
-        attributes_string = ', '.join([f"'{attr}': {getattr(self, attr)}" for attr in attrs])
-        return f"[{self.__class__.__name__}] ({self.id}) {{{attributes_string}}}"
+        return f"[{self.__class__.__name__}]({self.id}) {self.__dict__}"
