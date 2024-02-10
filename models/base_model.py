@@ -1,8 +1,9 @@
 #!/usr/bin/python3
 """The BaseModel Class"""
+import models
 from datetime import datetime
 from uuid import uuid4
-import models
+"""import models"""
 """from models.__init__ import storage"""
 
 class BaseModel:
