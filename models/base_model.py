@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Defines all common attributes/methods for other classes
+"""Defines common attributes/methods for all classes
 """
 import uuid
 from datetime import datetime
@@ -12,7 +12,7 @@ class BaseModel:
     def __init__(self, *args, **kwargs):
         """Initialization of a Base instance.
         Args:
-            - *args: list of arguments
+            - *args: unused argument
             - **kwargs: dict of key-values arguments
         """
         if kwargs:
@@ -32,25 +32,21 @@ class BaseModel:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
-            from models.engine.file_storage import FileStorage  # Import here
-            storage = FileStorage()
-            storage.new(self)  # as instructed also in task 5
+            models.storage.new(self)  # as instructed also in task 5
 
     def __str__(self):
-        """Returns a readable string representation
+        """Returns a string representation
         of BaseModel instances"""
 
-        clsName = self.__class__.__name__
-        return "[{}] ({}) {}".format(clsName, self.id, self.__dict__)
+        scn = self.__class__.__name__
+        return "[{}] ({}) {}".format(scn, self.id, self.__dict__)
 
     def save(self):
         """Updates the public instance attribute updated_at
         with the current datetime"""
-        from models.engine.file_storage import FileStorage
 
         self.updated_at = datetime.now()
-        storage = FileStorage()
-        storage.save()
+        models.storage.save()
 
     def to_dict(self):
         """Returns a dictionary that contains all
