@@ -32,7 +32,9 @@ class BaseModel:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
-            models.storage.new(self)  # as instructed also in task 5
+            from models.engine.file_storage import FileStorage  # Import here
+            storage = FileStorage()
+            storage.new(self)  # as instructed also in task 5
 
     def __str__(self):
         """Returns a readable string representation
@@ -44,9 +46,11 @@ class BaseModel:
     def save(self):
         """Updates the public instance attribute updated_at
         with the current datetime"""
+        from models.engine.file_storage import FileStorage
 
         self.updated_at = datetime.now()
-        models.storage.save()
+        storage = FileStorage()
+        storage.save()
 
     def to_dict(self):
         """Returns a dictionary that contains all

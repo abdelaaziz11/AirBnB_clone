@@ -15,18 +15,18 @@ from models.user import User
 
 class FileStorage():
     """ serializes instances to a JSON file 
-        and deserializes JSON
+        and deserializes JSON file to instances
     """
 
-    __file_path = "file.json"  # path to the JSON file (ex: file.json)
-    __objects = {}  # dictionary - store all objects by <class name>.id
+    __file_path = "file.json"
+    __objects = {}
 
     def all(self):
         """returns the dictionary __objects"""
         return self.__objects
 
     def new(self, obj):
-        """sets in __objects the obj with key"""
+        """sets in __objects the obj with key <obj class name>.id"""
         key = obj.__class__.__name__ + "." + str(obj.id)
         self.__objects[key] = obj
 
@@ -49,5 +49,5 @@ class FileStorage():
                     for key, val in new_obj.items():
                         obj = self.class_dict[val['__class__']](**val)
                         type(self).__objects[key] = obj
-            except Exception:
+            except:
                 pass
