@@ -4,6 +4,7 @@ file to instances:
 """
 
 import json
+import os
 from models.base_model import BaseModel
 #from models.amenity import Amenity
 #from models.city import City
@@ -42,12 +43,14 @@ class FileStorage():
             json.dump(json_object, f)
 
     def reload(self):
-        """ deserializes the JSON file to __objects """
-        try:
-            with open(self.__file_path, 'r', encoding="UTF8") as f:
-                # jlo = json.load(f)
-                for key, value in json.load(f).items():
-                    attri_value = eval(value["__class__"])(**value)
-                    self.__objects[key] = attri_value
-        except FileNotFoundError:
-            pass
+        """Deserializes the JSON file to __objects if it exists"""
+        if os.path.exists(type(self).__file_path) is True:
+            return
+            try:
+                with open(type(self).__file_path, "r") as file:
+                    new_obj = json.load(file)
+                    for key, val in new_obj.items():
+                        obj = self.class_dict[val['__class__']](**val)
+                        type(self).__objects[key] = obj
+            except Exception:
+                pass
