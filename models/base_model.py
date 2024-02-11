@@ -18,9 +18,9 @@ class BaseModel:
                 if keys == '__class__':
                     continue
                 elif keys == "created_at" or keys == "updated_at":
-                    self.__dict__[keys] = datetime.strptime(values, formattime)
+                    setattr(self, keys, datetime.strptime(values, formattime))
                 else:
-                    self.__dict__[keys] = values
+                    setattr(self, keys, values)
         else:
             self.updated_at = datetime.today()
             self.id = str(uuid4())
