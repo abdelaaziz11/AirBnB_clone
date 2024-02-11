@@ -12,19 +12,21 @@ class BaseModel:
         """Create a new BaseModel.
         Args: *args is unused and **kwargs is for attributes.
         """
-        formattime = "%Y-%m-%dT%H:%M:%S.%f" 
-        if len(kwargs) != 0:
-            for keys, values in kwargs.items():
-                if keys == '__class__':
-                    continue
-                elif keys == "created_at" or keys == "updated_at":
-                    setattr(self, keys, datetime.strptime(values, formattime))
-                else:
-                    setattr(self, keys, values)
+        if kwargs:
+            formattime = "%Y-%m-%dT%H:%M:%S.%f"
+            for key, value in kwargs.items():
+                    if key == '__class__':
+                        continue
+                    elif key == 'created_at':
+                        self.created_at = datetime.strptime(kwargs['created_at'], formattime)
+                    elif key == 'updated_at':
+                        self.updated_at = datetime.strptime(kwargs['updated_at'], formattime)
+                    else:
+                        setattr(self, key, value)
         else:
-            self.updated_at = datetime.today()
-            self.id = str(uuid4())
+            self.id = str(uuid.uuid4())
             self.created_at = datetime.today()
+            self.updated_at = datetime.today()
             models.storage.new(self)
     def save(self):
         """updates the public instance attribute"""     
