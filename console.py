@@ -154,13 +154,13 @@ class HBNBCommand(cmd.Cmd):
 
         cmdPattern = "^([A-Za-z]+)\.([a-z]+)\(([^(]*)\)"
         paramsPattern = """^"([^"]+)"(?:,\s*(?:"([^"]+)"|(\{[^}]+\}))(?:,\s*(?:("?[^"]+"?)))?)?"""
-        m = re.match(cmdPattern, line)
-        if not m:
+        n = re.match(cmdPattern, line)
+        if not n:
             super().default(line)
             return
-        mName, method, params = m.groups()
-        m = re.match(paramsPattern, params)
-        params = [item for item in m.groups() if item] if m else []
+        mName, method, params = n.groups()
+        n = re.match(paramsPattern, params)
+        params = [items for items in n.groups() if items] if n else []
 
         cmd = " ".join([mName] + params)
 
