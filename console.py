@@ -15,7 +15,7 @@ from models.city import City
 from models.amenity import Amenity
 from models.review import Review
 
-class_home = {
+class_dict = {
     "BaseModel": BaseModel,
     "User": User,
     "Place": Place,
@@ -54,7 +54,7 @@ class HBNBCommand(cmd.Cmd):
                 glo_cls = globals().get(line, None)
                 obj = glo_cls()
                 obj.save()
-                print(obj.id)  # print the id
+                print(obj.id)
             except Exception:
                 print("** class doesn't exist **")
         else:
@@ -66,7 +66,7 @@ class HBNBCommand(cmd.Cmd):
 
         if len(arr) < 1:
             print("** class name missing **")
-        elif arr[0] not in class_home:
+        elif arr[0] not in class_dict:
             print("** class doesn't exist **")
         elif len(arr) < 2:
             print("** instance id missing **")
@@ -82,7 +82,7 @@ class HBNBCommand(cmd.Cmd):
         arr = line.split()
         if len(arr) < 1:
             print("** class name missing **")
-        elif arr[0] not in class_home:
+        elif arr[0] not in class_dict:
             print("** class doesn't exist **")
         elif len(arr) < 2:
             print("** instance id missing **")
@@ -101,7 +101,7 @@ class HBNBCommand(cmd.Cmd):
             print([str(value) for key, value in storage.all().items()])
         else:
             st = line.split(" ")
-            if st[0] not in class_home:
+            if st[0] not in class_dict:
                 print("** class doesn't exist **")
             else:
                 for key, value in storage.all().items():
@@ -116,7 +116,7 @@ class HBNBCommand(cmd.Cmd):
         if len(arr) < 1:
             print("** class name missing **")
             return
-        elif arr[0] not in class_home:
+        elif arr[0] not in class_dict:
             print("** class doesn't exist **")
             return
         elif len(arr) < 2:
@@ -138,8 +138,8 @@ class HBNBCommand(cmd.Cmd):
 
     def do_count(self, line):
         """Print the count all class instances"""
-        kclass = globals().get(line, None)
-        if kclass is None:
+        klass = globals().get(line, None)
+        if klass is None:
             print("** class doesn't exist **")
             return
         count = 0
