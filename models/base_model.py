@@ -13,18 +13,18 @@ class BaseModel:
         Args: *args is unused and **kwargs is for attributes.
         """
         formattime = "%Y-%m-%dT%H:%M:%S.%f" 
-        self.updated_at = datetime.today()
-        self.id = str(uuid4())
-        self.created_at = datetime.today()
         if len(kwargs) != 0:
             for keys, values in kwargs.items():
                 if keys == '__class__':
                     continue
-                if keys == "created_at" or keys == "updated_at":
+                elif keys == "created_at" or keys == "updated_at":
                     self.__dict__[keys] = datetime.strptime(values, formattime)
                 else:
                     self.__dict__[keys] = values
         else:
+            self.updated_at = datetime.today()
+            self.id = str(uuid4())
+            self.created_at = datetime.today()
             models.storage.new(self)
     def save(self):
         """updates the public instance attribute"""     
