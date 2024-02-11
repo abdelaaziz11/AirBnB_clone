@@ -164,20 +164,22 @@ class HBNBCommand(cmd.Cmd):
 
         cmd = " ".join([mName] + params)
 
-        if method == 'all':
+        elif method == 'all':
             return self.do_all(cmd)
 
-        if method == 'count':
+        elif method == 'count':
             return self.do_count(cmd)
 
-        if method == 'show':
+        elif method == 'show':
             return self.do_show(cmd)
 
-        if method == 'destroy':
+        elif method == 'destroy':
             return self.do_destroy(cmd)
 
-        if method == 'update':
+        elif method == 'update':
             return self.do_update(cmd)
+        else:
+            return
 
 
 if __name__ == '__main__':
