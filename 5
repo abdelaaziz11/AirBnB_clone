@@ -1,53 +1,58 @@
 #!/usr/bin/python3
-""" FileStorage that serializes instances to a JSON file and deserializes JSON
+"""Defines common attributes/methods for all classes
 """
-
-import json
-import os
-from models.base_model import BaseModel
-from models.amenity import Amenity
-from models.city import City
-from models.place import Place
-from models.review import Review
-from models.state import State
-from models.user import User
+import uuid
+from datetime import datetime
+import models
 
 
-class FileStorage():
-    """ serializes instances to a JSON file 
-        and deserializes JSON file to instances
-    """
+class BaseModel:
+    """Base class for all models"""
 
-    __file_path = "file.json"
-    __objects = {}
+    def __init__(self, *args, **kwargs):
+        """Initialization of a Base instance.
+        Args:
+            - *args: unused argument
+            - **kwargs: dict of key-values arguments
+        """
+        if kwargs:
+            dtime_format = '%Y-%m-%dT%H:%M:%S.%f'
+            for key, value in kwargs.items():
+                if key == '__class__':
+                    continue
+                elif key == 'created_at':
+                    self.created_at = datetime.strptime(
+                        kwargs['created_at'], dtime_format)
+                elif key == 'updated_at':
+                    self.updated_at = datetime.strptime(
+                        kwargs['updated_at'], dtime_format)
+                else:
+                    setattr(self, key, value)
+        else:
+            self.id = str(uuid.uuid4())
+            self.created_at = datetime.now()
+            self.updated_at = datetime.now()
+            models.storage.new(self)  # as instructed also in task 5
 
-    def all(self):
-        """returns the dictionary __objects"""
-        return self.__objects
+    def __str__(self):
+        """Returns a string representation
+        of BaseModel instances"""
 
-    def new(self, obj):
-        """sets in __objects the obj with key <obj class name>.id"""
-        key = obj.__class__.__name__ + "." + str(obj.id)
-        self.__objects[key] = obj
+        scn = self.__class__.__name__
+        return "[{}] ({}) {}".format(scn, self.id, self.__dict__)
 
     def save(self):
-        """serializes __objects to the JSON file"""
-        json_object = {}
-        for key in self.__objects:
-            json_object[key] = self.__objects[key].to_dict()
+        """Updates the public instance attribute updated_at
+        with the current datetime"""
 
-        with open(self.__file_path, 'w') as f:
-            json.dump(json_object, f)
+        self.updated_at = datetime.now()
+        models.storage.save()
 
-    def reload(self):
-        """JSON file to __objects if it exists"""
-        if os.path.exists(type(self).__file_path) is True:
-            return
-            try:
-                with open(type(self).__file_path, "r") as file:
-                    new_obj = json.load(file)
-                    for key, val in new_obj.items():
-                        obj = self.class_dict[val['__class__']](**val)
-                        type(self).__objects[key] = obj
-            except:
-                pass
+    def to_dict(self):
+        """Returns a dictionary that contains all
+        keys/values of the instance"""
+        my_dict = self.__dict__.copy()
+        my_dict['updated_at'] = self.updated_at.isoformat()
+        my_dict['created_at'] = self.created_at.isoformat()
+        my_dict['__class__'] = self.__class__.__name__
+        return my_dict

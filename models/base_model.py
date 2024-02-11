@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Defines common attributes/methods for all classes
+"""Defines all common attributes/methods for other classes
 """
 import uuid
 from datetime import datetime
@@ -12,7 +12,7 @@ class BaseModel:
     def __init__(self, *args, **kwargs):
         """Initialization of a Base instance.
         Args:
-            - *args: unused argument
+            - *args: list of arguments
             - **kwargs: dict of key-values arguments
         """
         if kwargs:
@@ -35,11 +35,11 @@ class BaseModel:
             models.storage.new(self)  # as instructed also in task 5
 
     def __str__(self):
-        """Returns a string representation
+        """Returns a readable string representation
         of BaseModel instances"""
 
-        scn = self.__class__.__name__
-        return "[{}] ({}) {}".format(scn, self.id, self.__dict__)
+        clsName = self.__class__.__name__
+        return "[{}] ({}) {}".format(clsName, self.id, self.__dict__)
 
     def save(self):
         """Updates the public instance attribute updated_at
