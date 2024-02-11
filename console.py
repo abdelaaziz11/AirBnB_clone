@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 """console file"""
 
+import re
+import json
 import cmd
 from models.base_model import BaseModel
 from models import storage
@@ -23,6 +25,17 @@ class HBNBCommand(cmd.Cmd):
         "Review": Review,
         "State": State
         }
+    def do_count(self, line):
+        """Print the count all class instances"""
+        kclass = globals().get(line, None)
+        if kclass is None:
+            print("** class doesn't exist **")
+            return
+        count = 0
+        for obj in storage.all().values():
+            if obj.__class__.__name__ == line:
+                count += 1
+        print(count)
 
     def do_create(self, arg):
         """Creates a new instance of BaseModel, saves it, and prints the id"""
@@ -112,6 +125,17 @@ class HBNBCommand(cmd.Cmd):
             except NameError:
                 print("** class doesn't exist **")
 
+#    def do_count(self, line):
+#        """Print the count all class instances"""
+#        kclass = globals().get(line, None)
+#        if kclass is None:
+#            print("** class doesn't exist **")
+#            return
+#        count = 0
+#        for obj in storage.all().values():
+#            if obj.__class__.__name__ == line:
+#                count += 1
+#        print(count)
     def do_quit(self, arg):
         """quit command to exit the program"""
         return True
