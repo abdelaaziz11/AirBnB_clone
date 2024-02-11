@@ -1,53 +1,50 @@
 #!/usr/bin/python3
-"""Model Base """
-import uuid
-import models
+""" Class BaseModel """
 from datetime import datetime
+from uuid import uuid4
+import models
 
 
 class BaseModel:
-    """class Base"""
-    def __init__(self, *args, **kwargs):
-        """ Constructor """
-        if kwargs:
-            # self.__dict__ = kwargs
-            # self.created_at = datetime.strptime(self.created_at,
-            #                                     "%Y-%m-%dT%H:%M:%S.%f")
+    """ construct """
 
-            # self.updated_at = datetime.strptime(self.updated_at,
-            #                                     "%Y-%m-%dT%H:%M:%S.%f")
+    def __init__(self, *args, **kwargs):
+        """ Construct """
+        if kwargs:
             for key, value in kwargs.items():
-                if key == "created_at":
-                    value = datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%f')
-                if key == "updated_at":
-                    value = datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%f')
-                if key != "__class__":
-                    setattr(self, key, value)
+                if key == '__class__':
+                    continue
+                elif key == 'updated_at':
+                    value = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
+                elif key == 'created_at':
+                    value = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
+                if 'id' not in kwargs.keys():
+                    self.id = str(uuid4())
+                if 'created_at' not in kwargs.keys():
+                    self.created_at = datetime.now()
+                if 'updated_at' not in kwargs.keys():
+                    self.updated_at = datetime.now()
+                setattr(self, key, value)
         else:
-            self.id = str(uuid.uuid4())  # unique id
-            self.created_at = datetime.now()  # datetime when is created
-            self.updated_at = datetime.now()  # date when is updated
+            self.id = str(uuid4())
+            self.created_at = datetime.now()
+            self.updated_at = self.created_at
             models.storage.new(self)
 
     def __str__(self):
-        """ print() __str__ method """
-        """" For pep8 validation"""
-        className = self.__class__.__name__
-        return "[{}] ({}) {}".format(className, self.id, self.__dict__)
+        """ String """
+        return('[' + type(self).__name__ + '] (' + str(self.id) +
+               ') ' + str(self.__dict__))
 
     def save(self):
-        """ updates with the current datetime """
+        """ save function """
         self.updated_at = datetime.now()
         models.storage.save()
 
     def to_dict(self):
-        '''returns a dictionary with all keys/value of the instance'''
-        dict_copy = self.__dict__.copy()
-        dict_copy["created_at"] = self.created_at.isoformat()
-        dict_copy["updated_at"] = self.updated_at.isoformat()
-        dict_copy['__class__'] = self.__class__.__name__
-        return dict_copy
-
-    # @property
-    # def id(self):
-    #     return self.id
+        """ Return a dictonary """
+        aux_dict = self.__dict__.copy()
+        aux_dict['__class__'] = self.__class__.__name__
+        aux_dict['created_at'] = self.created_at.isoformat()
+        aux_dict['updated_at'] = self.updated_at.isoformat()
+        return aux_dict
