@@ -46,8 +46,6 @@ class HBNBCommand(cmd.Cmd):
     def emptyline(self):
         """ overwriting the emptyline method """
         return False
-        # OR
-        # pass
 
     def do_create(self, line):
         """Creates a new instances of a class"""
@@ -64,7 +62,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_show(self, line):
         """print <class name> <id>"""
-        arr = line.split()    # split & assign to varia
+        arr = line.split()
 
         if len(arr) < 1:
             print("** class name missing **")
@@ -80,8 +78,7 @@ class HBNBCommand(cmd.Cmd):
                 print(storage.all()[new_str])
 
     def do_destroy(self, line):
-        """Destroy command deletes an instance based on the class name and id
-        """
+        """Destroy command deletes an instance based on the class"""
         arr = line.split()
         if len(arr) < 1:
             print("** class name missing **")
@@ -95,27 +92,10 @@ class HBNBCommand(cmd.Cmd):
                 print("** no instance found **")
             else:
                 storage.all().pop(new_str)
-            #    del (storage.all()[new_str])
                 storage.save()
 
-    # def do_all(self, line):
-    #    """ Print all instances in string representation """
-    #    new_list = []
-
-    #    if not line:
-    #        for key, obj in storage.all().items():
-    #            new_list.append(str(obj))
-    #        print(new_list)
-    #    elif line not in class_home:
-    #        print("** class doesn't exist **")
-    #    else:
-    #        for key, obj in storage.all().items():
-    #            if obj.__class__.__name__ == line:
-    #                new_list.append(str(obj))
-    #        print(new_list)
-
     def do_all(self, line):
-        """ Print all instances in string representation """
+        """Print all instances in string"""
         objects = []
         if line == "":
             print([str(value) for key, value in storage.all().items()])
@@ -130,27 +110,8 @@ class HBNBCommand(cmd.Cmd):
                         objects.append(str(value))
                 print(objects)
 
-    # def do_all(self, line):
-    #    """ Print all instances in string representation """
-    #    arr = line.split()
-    #    if len(arr) > 0 and arr[0] not in storage.class_dict():
-    #        print("** class doesn't exist **")
-    #    else:
-    #        new_list = []
-    #        for obj in storage.all().values():
-    #            if len(arr) > 0 and arr[0] == obj.__class__.__name__:
-    #                new_list.append(obj.__str__())
-    #            elif len(arr) == 0:
-    #                new_list.append(obj.__str__())
-    #        print(new_list)
-
     def do_update(self, line):
-        """Update a class instance of a given id by adding or updating
-        a given attribute key/value pair or dictionary.
-        usage:  update <class> <id> <attribute_name> <attribute_value> or
-                <class>.update(<id>, <attribute_name>, <attribute_value>) or
-                <class>.update(<id>, <dictionary>)
-        """
+        """Given id by adding or updating"""
         arr = line.split()
         if len(arr) < 1:
             print("** class name missing **")
